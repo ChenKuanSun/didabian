@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "didabian": {
+      "hosting": {
+        "didabian": [
+          "didabian"
+        ]
+      }
+    }
+  }
+}

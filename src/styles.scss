@@ -1,0 +1,12 @@
+@import 'themes';
+
+@import '~@nebular/theme/styles/globals';
+
+@include nb-install() {
+  @include nb-theme-global();
+};
+// @import '~@ngx-share/button/themes/default/default-theme';
+@import '~@ngx-share/button/themes/material/material-dark-theme';
+@import '~@ngx-share/button/themes/modern/modern-light-theme';
+
+@import "~ng-pick-datetime/assets/style/picker.min.css";

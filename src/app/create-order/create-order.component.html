@@ -1,0 +1,58 @@
+<nb-card size="medium">
+  <nb-card-body>
+    <!-- <nb-stepper orientation="vertical" [disableStepNavigation]="true"> -->
+      <nb-stepper orientation="vertical">
+      <nb-step label="決定店家">
+        <h4>上傳菜單</h4>
+
+        <input hidden type="file" accept='image/*' #uploader (change)="uploadFile($event)" />
+        <ng-container *ngIf="uploadPercent$ | async as uploadPercent;else upload">
+          <mat-progress-spinner [color]="'primary'" [mode]="'determinate'" *ngIf="uploadPercent != 100"
+            [value]="uploadPercent">
+          </mat-progress-spinner>
+        </ng-container>
+        <ng-template #upload>
+          <button nbButton (click)="uploader.click()">
+            Upload
+          </button>
+        </ng-template>
+
+        <div class="image-container" *ngIf="(downloadURL | async) != null">
+          <img [src]="downloadURL | async">
+        </div>
+
+        <div class="actions">
+          <button nbButton disabled nbStepperNext>prev</button>
+          <button nbButton nbStepperNext [disabled]="!!!order.imageUrl">next</button>
+        </div>
+      </nb-step>
+      <nb-step label="截止時間">
+        <h4>截止時間</h4>
+        <mat-form-field>
+          <input matInput [min]="min" [max]="max" [owlDateTime]="dt1" (dateTimeChange)="setDeadline($event.value)"
+            [owlDateTimeTrigger]="dt1" placeholder="Date Time">
+          <owl-date-time #dt1 [pickerMode]="'dialog'"></owl-date-time>
+        </mat-form-field>
+        <div class="actions">
+          <button nbButton nbStepperPrevious>prev</button>
+          <button nbButton nbStepperNext [disabled]="!!!order.deadline" (click)="doneForm()">Done</button>
+        </div>
+      </nb-step>
+      <nb-step label="分享連結">
+        <h4>完成並分享揪團連結</h4>
+        <!-- <share-buttons></share-buttons> -->
+        <share-button button="messenger" text="Messenger" [url]="shareUrl">
+        </share-button>
+        <a [href]="'fb-messenger://share/?link=' + shareUrl">Send In Messenger</a>
+        <share-button button="telegram" text="Share" [url]="shareUrl">
+        </share-button>
+        <share-button button="line" text="LINE" [showIcon]="false" [showText]="true" [url]="shareUrl">
+        </share-button>
+        <share-button [button]="'copy'" [url]="shareUrl"></share-button>
+        <div class="actions">
+          <button nbButton nbStepperNext>Manage</button>
+        </div>
+      </nb-step>
+    </nb-stepper>
+  </nb-card-body>
+</nb-card>

@@ -1,0 +1,47 @@
+<!-- <nb-card size="medium" *ngIf="order$ | async as order">
+  <nb-card-body>
+
+  </nb-card-body>
+</nb-card> -->
+<ng-container *ngIf="order$ | async as order">
+  <h5>
+    菜單
+  </h5>
+  <div class="image-container">
+    <img [src]="order.imageUrl">
+  </div>
+  <h5>
+    截止時間
+  </h5>
+  <h5>
+    {{ order.deadline.toDate() | date:'yyyy/MM/dd h:mm a' }}
+  </h5>
+  <ng-container *ngIf="orderlist$ | async as orderlist">
+    <div class="item-container" *ngFor="let item of orderlist">
+      <div class="name-col">{{ item.productName }}</div>
+      <div class="row">
+        <span>{{ item.spec }}</span>
+        <span>{{ item.quantity }}</span>
+        <span>{{ item.quantity * item.price }}</span>
+      </div>
+    </div>
+  </ng-container>
+  <form class="example-form" [formGroup]="itemForm" #f="ngForm">
+    <mat-form-field class="example-full-width">
+      <input matInput formControlName="from" placeholder="訂購人" >
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+      <input matInput formControlName="productName" placeholder="品名">
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+      <input matInput formControlName="spec" placeholder="規格">
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+      <input matInput type="number" min=0 formControlName="quantity" placeholder="數量">
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+      <input matInput type="number" min=0 formControlName="price" placeholder="單價">
+    </mat-form-field>
+  </form>
+  <button nbButton [disabled]="itemForm.invalid" (click)="sendItem()">Send</button>
+</ng-container>
